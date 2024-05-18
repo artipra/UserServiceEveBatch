@@ -30,7 +30,7 @@ public class UserController {
 
   @PostMapping("/login")
   public Token login(@RequestBody LoginRequestDto loginRequestDto){
-   return null;
+   return userService.login(loginRequestDto.getEmail(),loginRequestDto.getPassword());
   }
 
   @PostMapping("logout")
