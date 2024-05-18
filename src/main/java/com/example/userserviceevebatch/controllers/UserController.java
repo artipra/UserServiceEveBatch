@@ -7,38 +7,36 @@ import com.example.userserviceevebatch.dtos.UserDto;
 import com.example.userserviceevebatch.models.Token;
 import com.example.userserviceevebatch.models.User;
 import com.example.userserviceevebatch.services.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
+
     private UserService userService;
+    @PostMapping("signup")
+  public UserDto signUp(@RequestBody SignUpRequestDto signUpRequestDto){
+       User savedUser =  userService.signUp(
+               signUpRequestDto.getEmail(),
+               signUpRequestDto.getName(),
+               signUpRequestDto.getPassword());
+    return UserDto.from(savedUser);
 
-    UserController(UserService userService) {
-        this.userService = userService;
-    }
+  }
 
-    @PostMapping("/signup")
-    public UserDto signUp(@RequestBody SignUpRequestDto requestDto) {
-        User user = userService.signUp(
-                requestDto.getEmail(),
-                requestDto.getName(),
-                requestDto.getPassword()
-        );
+  @PostMapping("/login")
+  public Token login(@RequestBody LoginRequestDto loginRequestDto){
+   return null;
+  }
 
-        return UserDto.from(user);
-    }
-
-    @PostMapping("/login")
-    public Token login(@RequestBody LoginRequestDto requestDto) {
-        return null;
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestBody LogOutRequestDto requestDto) {
-        return null;
-    }
+  @PostMapping("logout")
+  public RequestEntity<Void> logout(@RequestBody LogOutRequestDto logOutRequestDto ){
+    return null;
+  }
 
     @GetMapping("/validate/{token}")
     public UserDto validateToken(@PathVariable String token) {
@@ -49,4 +47,5 @@ public class UserController {
     public UserDto getUserById(@PathVariable Long id) {
         return null;
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.userserviceevebatch.configs;
+package com.example.userserviceevebatch.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

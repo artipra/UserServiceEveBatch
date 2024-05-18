@@ -3,8 +3,9 @@ package com.example.userserviceevebatch.dtos;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 public class LogOutRequestDto {
+
     private String token;
 }

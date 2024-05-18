@@ -1,20 +1,25 @@
 package com.example.userserviceevebatch.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-
+@Entity
 @Getter
 @Setter
-@Entity
 public class User extends BaseModel {
+
     private String name;
-    private String email;
     private String hashedPassword;
-    @ManyToMany
-    private List<Role> roles;
+    private String email;
     private boolean isEmailVerified;
+    @ManyToMany
+    private List<Roles> roles;
+    //it will result same way as ManyToOne in child entity if mention at both side
+    // and benefits that you can apply cascade in parent class
+    // but construct different result when only use in parent table
+//    @OneToMany(mappedBy = "users",cascade = CascadeType.ALL)
+//    private List<Token> tokens;
+
 }
