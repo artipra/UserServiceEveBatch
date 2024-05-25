@@ -13,6 +13,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((requests) -> {
                             try {
                                 requests
+                                        // disable the spring security
                                         .anyRequest().permitAll()
                                         .and().cors().disable()
                                         .csrf().disable();

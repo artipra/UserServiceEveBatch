@@ -1,5 +1,6 @@
 package com.example.userserviceevebatch.services;
 
+import com.example.userserviceevebatch.exception.InvalidTokenException;
 import com.example.userserviceevebatch.exception.TooManyDeviceException;
 import com.example.userserviceevebatch.exception.UserNotFoundException;
 import com.example.userserviceevebatch.exception.passwordMismatchException;
@@ -11,6 +12,8 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -62,9 +65,20 @@ public class UserService {
 
 
     public void logout(String token){
+        Token validToken = tokenRepository.findByDeletedAndValue(false,token)
+                        .orElseThrow(() -> new InvalidTokenException("Invalid Exception"));
+        validToken.setDeleted(true);
+        tokenRepository.save(validToken);
+        }
+
+    public User validateToken(String token){
+        Optional<Token> validToken = tokenRepository.findByDeletedAndExpiryAtAfterAndValue(false,new Date(),token);
+        return validToken.map(Token::getUsers).orElse(null);
     }
 
-    public User validateToken(String Token){
-     return null;
+    public User UserById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("user not found with this id "+id));
     }
+
 }

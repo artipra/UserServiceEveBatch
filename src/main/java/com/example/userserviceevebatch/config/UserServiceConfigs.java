@@ -9,6 +9,7 @@ public class UserServiceConfigs {
 
     @Bean
     public BCryptPasswordEncoder getBCryptPasswordEncoder(){
+        //return new BCryptPasswordEncoder(18); provide how many round of encryption is needed
         return new BCryptPasswordEncoder();
     }
 

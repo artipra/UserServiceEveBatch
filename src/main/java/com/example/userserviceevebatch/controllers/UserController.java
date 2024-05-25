@@ -8,6 +8,7 @@ import com.example.userserviceevebatch.models.Token;
 import com.example.userserviceevebatch.models.User;
 import com.example.userserviceevebatch.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,18 +35,21 @@ public class UserController {
   }
 
   @PostMapping("logout")
-  public RequestEntity<Void> logout(@RequestBody LogOutRequestDto logOutRequestDto ){
-    return null;
+  public ResponseEntity<Void> logout(@RequestBody LogOutRequestDto logOutRequestDto ){
+    userService.logout(logOutRequestDto.getValue());
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
     @GetMapping("/validate/{token}")
     public UserDto validateToken(@PathVariable String token) {
-        return null;
+        User user = userService.validateToken(token);
+        return UserDto.from(user);
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable Long id) {
-        return null;
+        User user = userService.UserById(id);
+        return UserDto.from(user);
     }
 
 }

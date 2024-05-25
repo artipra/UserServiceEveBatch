@@ -14,7 +14,7 @@ public class User extends BaseModel {
     private String hashedPassword;
     private String email;
     private boolean isEmailVerified;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Roles> roles;
     //it will result same way as ManyToOne in child entity if mention at both side
     // and benefits that you can apply cascade in parent class
